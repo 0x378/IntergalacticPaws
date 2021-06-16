@@ -1,0 +1,91 @@
+/*  FONTS */
+
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Odibee+Sans&display=swap');
+
+body, html {
+    height: 100%;
+    background-color: rgba(48,48, 48, 1);
+    margin-left: 75px;
+    margin-right: 75px;
+}
+
+.spaceImage {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("splash.png");
+    height: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding-bottom: 15px;
+    margin-top: 20px;
+}
+
+
+.imageText {
+    font-family: 'Odibee Sans', cursive;
+    text-shadow: 0.8px 0.8px 10px #c20059;
+    letter-spacing: 2px;
+    font-size: 100px;
+    color: #54ece5;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-decoration-line: underline;
+}
+
+h2 {
+    font-family: 'Odibee Sans', cursive;
+    font-size: 35px;
+    color: #00163c;
+    text-align: center;
+    text-decoration-line: underline;
+}
+
+.Mission {
+    background-color: #797979;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.Mechanics {
+    background-color: #797979;
+}
+
+h3 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 18px;
+    color: rgba(9, 0, 24, 1);
+    text-align: center;
+    text-decoration-line: underline;
+}
+
+p
+{
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: white;
+}
+
+.row
+{
+    display: flex;
+}
+.column1 {
+    border: groove;
+    background-color: rgba(0, 78, 100, 1);
+    flex: 50%;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+dl {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: white;
+}
+
+
