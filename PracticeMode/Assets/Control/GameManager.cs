@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static LunarSurface terrainInstance;
-    public static TargetSelector targetSelector;
 
     private float backgroundWidth = 1600f;
     private float backgroundHeight = 900f;
@@ -67,28 +66,14 @@ public class GameManager : MonoBehaviour
             float targetScaleX = Screen.width / backgroundWidth;
             float targetScaleY = Screen.height / backgroundHeight;
 
-            /*
-            // Preserve the aspect ratio:
-            if (targetScaleX > targetScaleY)
-            {
-                targetScaleX = targetScaleY;
-            }
-            else
-            {
-                targetScaleY = targetScaleX;
-            }*/
-
             userInterface.transform.localScale = new Vector3(targetScaleX, targetScaleY, 1f);
         }
     }
 
-    public void ToggleGravityMode() {
+    public void ToggleGravityMode()
+    {
         if (Physics.gravity == gravityMode1) Physics.gravity = gravityMode2;
         else Physics.gravity = gravityMode1;
-    }
-
-    public int NumberOfEnemiesAlive() {
-        return targetSelector.returnQuantity() - 1;
     }
 
     // Listener for the "Play Again" button:
@@ -120,41 +105,8 @@ public class GameManager : MonoBehaviour
         spawnIsScheduled = false;
     }
 
-    public void Halt()
-    {
-        // If the game has not already ended
-        if (currentState == GameState.Play)
-        {
-            currentState = GameState.End;
-
-            mainMenuInterface.SetActive(false);
-            pauseMenuInterface.SetActive(false);
-            editorInterface.SetActive(false);
-            endMenuInterface.gameObject.SetActive(true);
-
-            PlayerCar playerVehicle = targetSelector.GetPlayer();
-            int playerHealth;
-
-            if (playerVehicle == null)
-            {
-                playerHealth = 0;
-            }
-            else
-            {
-                playerHealth = playerVehicle.currentHealth;
-            }
-
-            // Set the win/lose condition based on whether the player is still alive:
-            endMenuInterface.SetCondition(playerHealth > 0);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }
-
     private void BeginMenu()
     {
-        targetSelector.ClearAll();
         currentState = GameState.Menu;
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
@@ -223,8 +175,6 @@ public class GameManager : MonoBehaviour
 
     private void BeginClose()
     {
-        targetSelector.ClearAll();
-
         currentState = GameState.Close;
         SceneManager.LoadScene(2);
         Time.timeScale = 1;
@@ -285,7 +235,6 @@ public class GameManager : MonoBehaviour
         endMenuPlayAgain.onClick.AddListener(ScheduleReload);
         endMenuQuit.onClick.AddListener(BeginMenu);
 
-        targetSelector = new TargetSelector(16);
         BeginMenu();
 
         startTime = Time.time;
@@ -436,14 +385,6 @@ public class GameManager : MonoBehaviour
     // Select the applicable Update function based on the current state:
     private void Update()
     {
-        // **********************************************************
-        // FOR TESTING PURPOSES ONLY; TO BE REMOVED
-        // if (Input.GetKeyDown(KeyCode.H))
-        // {
-        //     Halt();
-        // }
-        // **********************************************************
-
         switch (currentState)
         {
             case GameState.Menu:

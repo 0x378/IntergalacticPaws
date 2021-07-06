@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DroneBehavior : MonoBehaviour
 {
@@ -8,32 +8,34 @@ public class DroneBehavior : MonoBehaviour
     [SerializeField] private GameObject currTar;
     float targetTime;
     bool activated = false, deactivated = false;
-    Vector3 pos, moveTo, activateTargetPosition, startingPosition;
+    Vector3 moveTo, activateTargetPosition, startingPosition;
     public GameObject oCam;
     public Camera cCam;
+
+    public GameObject GetNewTarget()
+    {
+        return GameObject.Find("LowPolyPlayerCar");
+    }
+
     void Start()
     {
-        pos = transform.position;
         targetTime = Time.time + Random.Range(12f, 18f);
         startingPosition = activateTargetPosition = transform.position;
         activateTargetPosition.y += 10f;
         StartCoroutine(droneActivate());
     }
+
     void Update()
     {
         if (!activated && !deactivated)
         {
             StartCoroutine(droneActivate());
         }
-        else if (deactivated)
-        {
-            // do nothing
-        }
-        else
+        else if (!deactivated)
         {
             if (targetTime <= Time.time || currTar == null)
             {
-                currTar = GameManager.targetSelector.GetRandomTarget();
+                currTar = GetNewTarget();
                 targetTime = Time.time + Random.Range(15f, 18f);
             }
             else // I added this "else" here, because it can still be null if no targets remain.
@@ -48,13 +50,15 @@ public class DroneBehavior : MonoBehaviour
             }
         }
     }
+
     IEnumerator droneActivate()
     {
         transform.position = Vector3.MoveTowards(transform.position, activateTargetPosition, (speed * 0.1f) * Time.smoothDeltaTime);
         yield return new WaitUntil(() => (transform.position == activateTargetPosition));
         activated = true;
-        currTar = GameManager.targetSelector.GetRandomTarget();
+        currTar = GetNewTarget();
     }
+
     IEnumerator droneDeactivate()
     {
         transform.position = Vector3.MoveTowards(transform.position, activateTargetPosition, speed * Time.smoothDeltaTime);
@@ -64,6 +68,7 @@ public class DroneBehavior : MonoBehaviour
         yield return new WaitUntil(() => (transform.position == startingPosition));
         deactivated = true;
     }
+
     public GameObject returnCurrTar()
     {
         return currTar;

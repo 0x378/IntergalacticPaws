@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Vehicle : PlayerHealth
+public class Vehicle : MonoBehaviour
 {
 	[SerializeField] protected GameObject steeringAxisFL;
 	[SerializeField] protected GameObject steeringAxisFR;
@@ -49,60 +49,6 @@ public class Vehicle : PlayerHealth
 
 	protected VehicleState currentState;
 
-	protected bool OnCollisionEnter(Collision collision)
-    {
-		if (collision.gameObject.CompareTag("Terrain"))
-		{
-			return false;
-		}
-
-		int damage;
-
-		if (collision.gameObject.CompareTag("Projectile"))
-		{
-			Projectile hit = collision.gameObject.GetComponent<Projectile>();
-
-			if (hit.IsSource(gameObject))
-			{
-				return true;
-			}
-			else
-			{
-				damage = collision.gameObject.GetComponent<Projectile>().GetDamageAmount();
-			}
-		}
-		else
-		{
-			damage = (int)(collision.relativeVelocity.magnitude * damageMultiplier);
-		}
-
-		TakeDamage(damage);
-
-		if (currentHealth <= 0)
-		{
-			highDamageAnimation.SetActive(true);
-			mediumDamageAnimation.SetActive(false);
-			lowDamageAnimation.SetActive(false);
-		}
-		else if (currentHealth <= 10)
-		{
-			highDamageAnimation.SetActive(true);
-			mediumDamageAnimation.SetActive(false);
-			lowDamageAnimation.SetActive(false);
-		}
-		else if (currentHealth <= 30)
-		{
-			mediumDamageAnimation.SetActive(true);
-			lowDamageAnimation.SetActive(false);
-		}
-		else if (currentHealth <= 50)
-		{
-			lowDamageAnimation.SetActive(true);
-		}
-
-		return true;
-	}
-
 	private void Awake()
 	{
 		// Prevent the creation of this object prior to initialization:
@@ -122,24 +68,7 @@ public class Vehicle : PlayerHealth
 			wheelDistance = (colliderFL.suspensionDistance + colliderFL.radius);
 			vehicleBody.centerOfMass += new Vector3(0f, -0.84f, 0f);
 		}
-
-		StartHealth(); // health
 	}
-
-	// Wheel collider brakes are glitchy if used while steering...
-	// Use at your own risk. :P
-	/*
-	protected void ApplyFrontBrakes()
-	{
-		colliderFL.brakeTorque = brakingPower;
-		colliderFR.brakeTorque = brakingPower;
-	}
-
-	protected void ReleaseFrontBrakes()
-	{
-		colliderFL.brakeTorque = 0f;
-		colliderFR.brakeTorque = 0f;
-	}*/
 
 	protected void ApplyRearBrakes()
 	{
@@ -190,7 +119,7 @@ public class Vehicle : PlayerHealth
 		Vector3 angularV = vehicleBody.angularVelocity;
 		float flipOffset = transform.up.y - 1;
 		float flipRatio = 1.5f * flipOffset * flipOffset;
-		angularV -= transform.forward * steeringRatio * flipRatio * Time.deltaTime;
+		angularV -= flipRatio * steeringRatio * Time.deltaTime * transform.forward;
 		vehicleBody.angularVelocity = angularV;
 	}
 

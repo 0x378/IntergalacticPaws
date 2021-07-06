@@ -5,36 +5,7 @@ public class PlayerCar : Vehicle
     private float minimumBound;
     private float maximumBound;
 
-    // [SerializeField] private DebugText debugText;
     [SerializeField] private Turret turret;
-    [SerializeField] private HealthBarUI healthBar;
-
-    private new void OnCollisionEnter(Collision collision)
-    {
-        if (base.OnCollisionEnter(collision))
-        {
-            if (currentHealth > 0)
-            {
-                healthBar.SetHealth(currentHealth);
-            }
-            else
-            {
-                currentHealth = 0;
-                healthBar.SetHealth(currentHealth);
-                gameManager.Halt();
-            }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PowerUp"))
-        {
-            currentHealth += 40;
-            healthBar.SetHealth(currentHealth);
-            other.gameObject.GetComponentInParent<PowerUps>().collectPU(other);
-        }
-    }
 
     private void Initialize()
     {
@@ -49,26 +20,9 @@ public class PlayerCar : Vehicle
         }
     }
 
-    /*
-    private void UpdateDebugText()
-    {
-        if (gameManager.debuggingIsEnabled)
-        {
-            string text = "Velocity: " + velocity;
-            text += "\nSpeed: " + speed.ToString("F2");
-            text += "\nDistance from center: " + distanceFromCenter.ToString("F2");
-
-            debugText.Set(text);
-        }
-    }
-    */
-
     private void Start()
     {
-        // debugText = Instantiate(debugText, transform.position, Quaternion.identity);
-        // debugText.Initialize(gameObject);
         Initialize();
-        GameManager.targetSelector.Insert(gameObject);
     }
 
     private void UpdateNormalOperation()
@@ -150,9 +104,6 @@ public class PlayerCar : Vehicle
                     {
                         UpdateTorque(0f);
                         ApplyRearBrakes();
-
-                        currentHealth = 0;
-                        gameManager.Halt();
                     }
                     else
                     {
@@ -160,8 +111,6 @@ public class PlayerCar : Vehicle
                     }
                 }
             }
-
-            // UpdateDebugText();
         }
     }
 }

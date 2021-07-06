@@ -686,7 +686,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1261567663045734244}
-  - component: {fileID: 439095404576313395}
   - component: {fileID: 1196036339268822925}
   - component: {fileID: 1196036339268822926}
   m_Layer: 0
@@ -728,18 +727,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &439095404576313395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930405651688043998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d471fa291e2e3af4b94dbe67615211cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1196036339268822925
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -782,7 +769,6 @@ MonoBehaviour:
   mediumDamageAnimation: {fileID: 2977312693846721101}
   highDamageAnimation: {fileID: 8533028743558766335}
   turret: {fileID: 7267838521766896754}
-  healthBar: {fileID: 0}
 --- !u!1 &2042458741206738673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,14 +1462,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b89a0b81c18f8548ae1e630445434b9, type: 3}
---- !u!4 &6789976643514145705 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4952727634889040, guid: 3b89a0b81c18f8548ae1e630445434b9, type: 3}
-  m_PrefabInstance: {fileID: 6785604891877626617}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6786832259857207927 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1376905856516238, guid: 3b89a0b81c18f8548ae1e630445434b9, type: 3}
+  m_PrefabInstance: {fileID: 6785604891877626617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6789976643514145705 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4952727634889040, guid: 3b89a0b81c18f8548ae1e630445434b9, type: 3}
   m_PrefabInstance: {fileID: 6785604891877626617}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8532304293719956407
