@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Initializer.unity
+    guid: e6e3802bbd61ba84f979fa941c4cfe7c
+  - enabled: 1
+    path: Assets/Scenes/LunarDerby.unity
+    guid: 76d7f2b94a7b348479843b054f31aefa
+  - enabled: 1
+    path: Assets/Scenes/ClosingScene.unity
+    guid: f88460b8cfc6d6b4391869fc3fcbe546
+  m_configObjects: {}
