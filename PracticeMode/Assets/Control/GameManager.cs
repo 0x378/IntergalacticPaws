@@ -89,9 +89,9 @@ public class GameManager : MonoBehaviour
         float spawnRadius = terrainInstance.GetCraterRadius() * 0.8f;
         float centerOffset = terrainInstance.GetCenterOffset();
 
-        for (int i = 8; i < 18; i++)
+        for (int i = 0; i < 2; i++)
         {
-            float spawnAngle = 2f * Mathf.PI * (float)i / 11f;
+            float spawnAngle = 2f * Mathf.PI * (float)i / 3f;
             float spawnX = spawnRadius * Mathf.Cos(spawnAngle) + centerOffset;
             float spawnZ = spawnRadius * Mathf.Sin(spawnAngle) + centerOffset;
             float spawnY = terrainInstance.GetExactHeight(spawnX, spawnZ) + 2f;

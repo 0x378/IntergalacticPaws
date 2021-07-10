@@ -10,14 +10,11 @@ public class EnemyCar : Vehicle
     private float directionTime;
     private float currentSteeringRatio = 0f;
 
-    [SerializeField] private GameObject carChassisNormal;
-    [SerializeField] private GameObject carChassisDestroyed;
-
     private void SelectRandomWaypoint()
     {
         // Select random waypoint:
-        float centerOffset = terrainInstance.GetCenterOffset();
-        float craterRadius = terrainInstance.GetCraterRadius();
+        float centerOffset = 512f;
+        float craterRadius = 128f;
         float targetRadius = Random.Range(0.2f * craterRadius, 0.7f * craterRadius);
         float targetAngle = Random.Range(0f, 2f * Mathf.PI);
 
@@ -31,22 +28,13 @@ public class EnemyCar : Vehicle
 
     private void Initialize()
     {
-        terrainInstance = GameManager.terrainInstance;
         waypointDistance = 0f;
-        currentState = VehicleState.Wander;
         directionTime = Time.time;
-
-        if (terrainInstance != null)
-        {
-            craterRadius = terrainInstance.GetCraterRadius();
-            centerOffset = terrainInstance.GetCenterOffset();
-            SelectRandomWaypoint();
-        }
+        SelectRandomWaypoint();
     }
 
     private void Start()
     {
-        carChassisDestroyed.SetActive(false);
         Initialize();
     }
 
@@ -139,30 +127,7 @@ public class EnemyCar : Vehicle
 
     private void Update()
     {
-        if (terrainInstance == null)
-        {
-            Initialize();
-        }
-        else
-        {
-            UpdatePosition();
-
-            if (GameManager.currentState == GameManager.GameState.End)
-            {
-                UpdateTorque(0f);
-                ApplyRearBrakes();
-            }
-            else
-            {
-                distanceFromCenter = terrainInstance.DistanceFromCenter(gameObject);
-
-                if (currentState != VehicleState.Destroyed && distanceFromCenter > craterRadius)
-                {
-                    currentState = VehicleState.Eliminated;
-                }
-
-                UpdateWander();
-            }
-        }
+        UpdatePosition();
+        UpdateWander();
     }
 }

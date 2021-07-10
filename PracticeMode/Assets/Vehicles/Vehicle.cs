@@ -15,59 +15,22 @@ public class Vehicle : MonoBehaviour
 	[SerializeField] protected WheelCollider colliderRL;
 	[SerializeField] protected WheelCollider colliderRR;
 
-	[SerializeField] protected GameObject lowDamageAnimation;
-	[SerializeField] protected GameObject mediumDamageAnimation;
-	[SerializeField] protected GameObject highDamageAnimation;
-
 	protected float torqueCoefficient = 1600f;
 	protected float steeringCoefficient = 40f;
-	protected float damageMultiplier = 0.18f;
 	protected float brakingPower = 5000f;
 	protected float wheelDistance = 1f;
 	protected float speed = 0f;
 
-	// Must be initialized by inheriting object prior to use:
-	protected float distanceFromCenter = 0f;
-	protected float craterRadius = 128f;
-	protected float centerOffset = 512f;
-
-	protected GameManager gameManager;
-	protected LunarSurface terrainInstance;
 	protected Rigidbody vehicleBody;
 
 	protected Vector3 currentPosition;
 	protected Vector3 velocity;
 
-	public enum VehicleState
-	{
-		Wander,
-		Chase,
-		Flee,
-		Eliminated,
-		Destroyed
-	}
-
-	protected VehicleState currentState;
-
 	private void Awake()
 	{
-		// Prevent the creation of this object prior to initialization:
-		gameManager = GameManager.Instance;
-
-		if (gameManager == null)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			lowDamageAnimation.SetActive(false);
-			mediumDamageAnimation.SetActive(false);
-			highDamageAnimation.SetActive(false);
-
-			vehicleBody = GetComponent<Rigidbody>();
-			wheelDistance = (colliderFL.suspensionDistance + colliderFL.radius);
-			vehicleBody.centerOfMass += new Vector3(0f, -0.84f, 0f);
-		}
+		vehicleBody = GetComponent<Rigidbody>();
+		wheelDistance = colliderFL.suspensionDistance + colliderFL.radius;
+		vehicleBody.centerOfMass += new Vector3(0f, -0.84f, 0f);
 	}
 
 	protected void ApplyRearBrakes()
@@ -85,21 +48,6 @@ public class Vehicle : MonoBehaviour
 	protected void UpdatePosition()
 	{
 		currentPosition = transform.position;
-
-		if (gameManager.editorInterface.activeSelf)
-		{
-			craterRadius = terrainInstance.GetCraterRadius();
-			centerOffset = terrainInstance.GetCenterOffset();
-			float mapHeight = terrainInstance.GetExactHeight(currentPosition.x, currentPosition.z);
-
-			if (currentPosition.y < mapHeight + 1f)
-			{
-				currentPosition.y = mapHeight + 1f;
-			}
-
-			transform.position = currentPosition;
-		}
-
 		velocity = vehicleBody.velocity;
 		speed = transform.InverseTransformDirection(velocity).z;
 	}
